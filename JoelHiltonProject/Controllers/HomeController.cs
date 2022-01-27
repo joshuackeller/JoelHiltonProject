@@ -7,15 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using JoelHiltonProject.Models;
 
-namespace JoelHiltonProject.Controllers
+namespace JoelHilton.Controllers
 {
+
+
+
+
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        private DatabaseContext _movieContext { get; set; }  
+       
+        public HomeController(ILogger<HomeController> logger, DatabaseContext context)
         {
             _logger = logger;
+            _movieContext = context;
         }
 
         public IActionResult Index()
@@ -23,10 +30,24 @@ namespace JoelHiltonProject.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult MyPodcasts()
         {
             return View();
         }
+        [HttpGet]
+        public IActionResult AddMovie()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult AddMovie(AddMovieModel movie)
+        {
+            _movieContext.Add(movie);
+            _movieContext.SaveChanges();
+            return View("Confirmation", movie);
+        }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

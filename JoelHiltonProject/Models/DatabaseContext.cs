@@ -1,10 +1,57 @@
 ﻿using System;
+using Microsoft.EntityFrameworkCore;
+
 namespace JoelHiltonProject.Models
 {
-    public class DatabaseContext
+    public class DatabaseContext : DbContext
     {
-        public DatabaseContext()
+        public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
         {
+
+        }
+
+        public DbSet<AddMovieModel> responses { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder movie)
+        {
+            movie.Entity<AddMovieModel>().HasData(
+                new AddMovieModel
+                {
+                    MovieId = 1,
+                    Category = "Musical",
+                    Title = "West Side Story",
+                    Year = 2021,
+                    Director = "Steven Spielberg",
+                    Rating = "PG-13",
+                    Edited = false,
+                    LentTo = null,
+                    Notes = null,
+                },
+                new AddMovieModel
+                {
+                    MovieId = 1,
+                    Category = "Fiction",
+                    Title = "Ghostbusters: Afterlife",
+                    Year = 2021,
+                    Director = "Jason Reitman",
+                    Rating = "PG-13",
+                    Edited = false,
+                    LentTo = null,
+                    Notes = null,
+                },
+                new AddMovieModel
+                {
+                    MovieId = 1,
+                    Category = "Fiction",
+                    Title = "Spiderman: No Way Home",
+                    Year = 2021,
+                    Director = "Jon Watts",
+                    Rating = "PG-13",
+                    Edited = false,
+                    LentTo = null,
+                    Notes = null,
+                }
+                );
         }
     }
-}
+} 
